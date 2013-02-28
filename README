@@ -1,0 +1,70 @@
+Gnome-emacs-utils
+=================
+
+This is a set of Emacs Lisp utilities to help Gnome developers.  It
+has the following features:
+
+* Teach Emacs about Mallard documents.
+
+
+Installation
+============
+
+The main Emacs file is gnome-emacs-utils.el.  You can put this in your
+.emacs to load this file:
+
+(load-library "/home/you/src/gnome-emacs-utils/gnome-emacs-utils.el")
+
+Be sure to use the correct pathname, of course :)  If you know of a more
+elegant way to load that elisp, please tweak this README file!
+
+
+Wanted features
+===============
+
+* Have a way of bringing up Yelp with documentation for the function
+  at the point.  This is easy for C functions with full names like
+  gtk_window_set_title, and harder for languages that let you
+  access methods as mywindow.set_title.
+
+* Add a hotkey so that inline API docs can be created easily when you
+  are editing a public function.  For example, imagine you are in the
+  following code and the point is at [*]:
+
+     GtkSandwich *
+     gtk_foo_make_me_a_sandwich (GtkFoo *foo, GList *ingredients, GError **error)
+     {
+         [*]
+
+  Then you press that hotkey, and the following documentation template
+  is added:
+
+     /**
+      * gtk_foo_make_me_a_sandwich:
+      * foo: 
+      * ingredients:
+      * error:
+      *
+      * Put the description here.
+      *
+      * Return value: 
+      **/
+     GtkSandwich *
+     gtk_foo_make_me_a_sandwich (GtkFoo *foo, GList *ingredients, GError **error)
+     {
+
+  We used to have this in Gnome 1.x; see gnome-doc.el.  Try to revive
+  this code!
+
+* Now that we have gobject-introspection, use one of Emacs's
+  typing completion libraries to implement "IntelliSense for Gnome
+  functions":
+
+	http://emacswiki.org/emacs/CategoryCompletion
+
+
+Authors
+=======
+
+Federico Mena Quintero <federico@gnome.org>
+Bitcoin donations kindly accepted at 1Ad3TS5u1Tq1SAUsuC8pz9VwHQeU6KStdA
