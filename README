@@ -7,6 +7,13 @@ has the following features:
 * Teach Emacs about Mallard documents.
 
 
+License
+=======
+
+Gnome-emacs-utils is distributed under the GNU General Public License
+version 2 or later.  See the file COPYING for details.
+
+
 Installation
 ============
 
