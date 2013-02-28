@@ -1,0 +1,12 @@
+<!-- This file is so that Emacs's nxml-mode can know that it should
+     use the RELAX NG Compact Syntax for Mallard (i.e. the RNC).
+
+     This schema locating file assumes that the gnome-doc-utils module
+     is installed somewhere in your system, as it needs the
+     mallard.rnc file.
+-->
+
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <!-- FIXME: this has an absolute pathname.  How should we locate that file? -->
+  <namespace ns="http://projectmallard.org/1.0/" uri="/usr/share/xml/mallard/1.0/mallard.rnc"/>
+</locatingRules>
