@@ -32,5 +32,17 @@
 
 (add-to-list 'auto-mode-alist '("\\.page\\'" . xml-mode))
 
-;;; FIXME: this has an absolute pathname.  How should we locate this file?
-(add-to-list 'rng-schema-locating-files "/home/federico/src/gnome-emacs-utils/mallard-locating-schema.xml" t)
+(add-hook 'nxml-mode-hook
+	  (lambda ()
+	    ;; FIXME: this has an absolute pathname.  How should we locate this file?
+	    (add-to-list 'rng-schema-locating-files
+			 "/home/federico/src/gnome-emacs-utils/mallard-locating-schema.xml")
+
+	    ;; FIXME: In theory calling rng-auto-set-schema-and-validate below should not be necessary, because
+	    ;; nxml-mode does it automatically when you load a file.  However, it *is* necessary for the
+	    ;; *first* time you load an XML/Mallard file into Emacs.  Our function for nxml-mode-hook runs
+	    ;; *after* nxml-mode is started, and so we don't have a chance to tweak rng-schema-locating-files
+	    ;; until after the file has been loaded.  I guess nxml-mode assumes that the *user* will be
+	    ;; customizing this variable, but we want gnome-emacs-utils to add values to it itself, without
+	    ;; user intervention.
+	    (rng-auto-set-schema-and-validate)))
