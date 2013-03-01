@@ -7,6 +7,10 @@
 -->
 
 <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri pattern="*.page" typeId="Mallard"/>
+
+  <namespace ns="http://projectmallard.org/1.0/" typeId="Mallard"/>
+
   <!-- FIXME: this has an absolute pathname.  How should we locate that file? -->
-  <namespace ns="http://projectmallard.org/1.0/" uri="/usr/share/xml/mallard/1.0/mallard.rnc"/>
+  <typeId id="Mallard" uri="/usr/share/xml/mallard/1.0/mallard.rnc"/>
 </locatingRules>
