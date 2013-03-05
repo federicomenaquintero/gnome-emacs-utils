@@ -1,0 +1,7 @@
+#NAME:grif (g_returtn_if_fail)
+# --
+g_return_if_fail ($1);
+
+#NAME:grvif (g_return_val_if_fail)
+# --
+g_return_val_if_fail ($1, $2);
