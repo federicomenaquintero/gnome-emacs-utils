@@ -13,7 +13,7 @@
 
 ;; You should have received a copy of the GNU General Public
 ;; License along with this program; if not, write to the Free
-;; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+;; Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;; MA 0211
 ;;
 
@@ -22,9 +22,12 @@
 ;;  This file auto-generates a C function document header from the
 ;;  current function.
 
-;;  Load into emacs and use C-x4h, or M-x gnome-doc-insert to insert
-;;  a new header for the current function.  You have to be somewhere in
-;;  the body of the function you wish to document.
+;;  Load into emacs (e.g. add (load "~/gtk-doc.el") to your .emacs file)
+;;  and use C-x4h, or M-x gtk-doc-insert to insert a new header for
+;;  the current function.  You have to be somewhere in the body of the
+;;  function you wish to document.
+
+;;  You can also now use C-x4s to insert a blank section header.
 
 ;;  The default header format is setup to do 'gnome' style headers.
 ;;  These headers are used in the Gnome project to automatically
@@ -40,7 +43,7 @@
 ;;   *
 ;;   * _
 ;;   *
-;;   * Return Value: 
+;;   * Returns: 
 ;;   **/
 ;;  int function_name(char *param1, int param2)
 ;;  {
@@ -80,7 +83,7 @@
 ;;    
 ;;    _
 ;;    
-;;    Return Value: 
+;;    Returns: 
 ;;    */
 
 ;; With the blank line defined as "", a much more
@@ -89,7 +92,7 @@
 ;; /* function_name
 ;;    param1: 
 ;;    param2: _
-;;    Return Value: 
+;;    Returns: 
 ;;    */
 
 ;;;;
@@ -110,8 +113,13 @@ Using '%s' will expand to the name of the function."
   :type '(string)
   :group 'gnome-doc)
 
-(defcustom gnome-doc-blank " * \n"
+(defcustom gnome-doc-blank " *\n"
   "Used to put a blank line into the header."
+  :type '(string)
+  :group 'gnome-doc)
+
+(defcustom gnome-doc-blank-space " * \n"
+  "Used to put a blank line into the header, plus a space"
   :type '(string)
   :group 'gnome-doc)
 
@@ -133,7 +141,7 @@ Using '%s' will be replaced with the name of the parameter."
   "How to define a new section in the output.
 
 Using '%s' is replaced with the name of the section.
-Currently this will only be used to define the 'return value' field."
+Currently this will only be used to define the 'returns' field."
   :type '(string)
   :group 'gnome-doc)
 
@@ -161,6 +169,7 @@ at least the first line of this which matches gnome-doc-match-block"
 (make-variable-buffer-local 'gnome-doc-parameter)
 (make-variable-buffer-local 'gnome-doc-section)
 (make-variable-buffer-local 'gnome-doc-blank)
+(make-variable-buffer-local 'gnome-doc-blank-space)
 (make-variable-buffer-local 'gnome-doc-match-block)
 (make-variable-buffer-local 'gnome-doc-match-header)
 
@@ -176,6 +185,10 @@ at least the first line of this which matches gnome-doc-match-block"
 (defun gnome-doc-insert-blank ()
   (insert gnome-doc-blank))
 
+;; insert a 'blank-space' comment line
+(defun gnome-doc-insert-blank-space ()
+  (insert gnome-doc-blank-space))
+
 ;; insert a section comment line
 (defun gnome-doc-insert-section (section)
   (insert (format gnome-doc-section section)))
@@ -184,72 +197,75 @@ at least the first line of this which matches gnome-doc-match-block"
 (defun gnome-doc-insert-footer (func)
   (insert (format gnome-doc-trailer func)))
 
-(defun gnome-doc-insert ()
+(defun gtk-doc-insert ()
   "Add a documentation header to the current function.
 Only C/C++ function types are properly supported currently."
   (interactive)
   (let (c-insert-here (point))
-    (save-excursion
-      (beginning-of-defun)
-      (let (c-arglist
-	    c-funcname
-	    (c-point (point))
-	    c-comment-point
-	    c-isvoid
-	    c-doinsert)
-	(search-backward "(")
-	(forward-line -2)
-	(while (or (looking-at "^$")
-		   (looking-at "^ *}")
-		   (looking-at "^ \\*")
-		   (looking-at "^#"))
-	  (forward-line 1))
-	(if (or (looking-at ".*void.*(")
-		(looking-at ".*void[ \t]*$"))
-	    (setq c-isvoid 1))
-	(save-excursion
-	  (if (re-search-forward "\\([A-Za-z0-9_:~]+\\)[ \t\n]*\\(([^)]*)\\)" c-point nil)
-	      (let ((c-argstart (match-beginning 2))
-		    (c-argend (match-end 2)))
-		(setq c-funcname (buffer-substring (match-beginning 1) (match-end 1)))
-		(goto-char c-argstart)
-		(while (re-search-forward "\\([A-Za-z0-9_]*\\) *[,)]" c-argend t)
-		  (setq c-arglist
-			(append c-arglist
-				(list (buffer-substring (match-beginning 1) (match-end 1)))))))))
+    (save-restriction
+      (save-excursion
+	(beginning-of-defun)
+	(narrow-to-page)
+	(let (c-arglist
+	      c-funcname
+	      c-point
+	      c-comment-point
+	      c-isvoid
+	      c-doinsert)
+	  (while (or (looking-at "^$")
+		     (looking-at "^ *}")
+		     (looking-at "^ \\*")
+		     (looking-at "^#"))
+	    (forward-line 1))
+	  (if (or (looking-at ".*void.*(")
+		  (looking-at ".*void[ \t]*$"))
+	      (setq c-isvoid 1))
 
-	;; see if we already have a header here ...
-	(save-excursion
-	  (forward-line -1)
-	  (while (looking-at gnome-doc-match-block)
-	    (forward-line -1))
-	  (if (looking-at gnome-doc-match-header)
-	      (error "Header already exists")
-	    (setq c-doinsert t)))
+	  (setq c-point point)
 
-	;; insert header
-	(if c-doinsert
-	    (progn
-	      (gnome-doc-insert-header c-funcname)
+	  (save-excursion
+	    (if (re-search-forward "\\([A-Za-z0-9_:~]+\\)[ \t\n]*\\(([^)]*)\\)" c-point nil)
+		(let ((c-argstart (match-beginning 2))
+		      (c-argend (match-end 2)))
+		  (setq c-funcname (buffer-substring (match-beginning 1) (match-end 1)))
+		  (goto-char c-argstart)
+		  (while (re-search-forward "\\([A-Za-z0-9_]*\\) *[,)]" c-argend t)
+		    (setq c-arglist
+			  (append c-arglist
+				  (list (buffer-substring (match-beginning 1) (match-end 1)))))))))
+
+	  ;; see if we already have a header here ...
+	  (save-excursion
+	    (forward-line -1)
+	    (while (looking-at gnome-doc-match-block)
+	      (forward-line -1))
+	    (if (looking-at gnome-doc-match-header)
+		(error "Header already exists")
+	      (setq c-doinsert t)))
+
+	  ;; insert header
+	  (if c-doinsert
+	      (progn
+		(gnome-doc-insert-header c-funcname)
 	
-	      ;; all arguments
-	      (while c-arglist
-		(gnome-doc-insert-var (car c-arglist))
-		(setq c-arglist (cdr c-arglist)))
+		;; all arguments
+		(while c-arglist
+		  (gnome-doc-insert-var (car c-arglist))
+		  (setq c-arglist (cdr c-arglist)))
 	
-	      ;; finish it off
-	      (gnome-doc-insert-blank)
-	      (gnome-doc-insert-blank)
-	      ;; record the point of insertion
-	      (setq c-insert-here (- (point) 1))
+		;; finish it off
+		(gnome-doc-insert-blank)
+		(gnome-doc-insert-blank-space)
+		;; record the point of insertion
+		(setq c-insert-here (- (point) 1))
 
-	      ;; only insert a returnvalue if we have one ...
-	      (if (not c-isvoid)
-		  (progn
-		    (gnome-doc-insert-blank)
-		    (gnome-doc-insert-section "Return value")))
+		;; only insert a returns if we have one ...
+		(if (not c-isvoid)
+		    (progn
+		      (gnome-doc-insert-blank)
+		      (gnome-doc-insert-section "Returns")))
 	      
-	      (gnome-doc-insert-footer c-funcname)))))
+		(gnome-doc-insert-footer c-funcname))))))
 	
     ;; goto the start of the description saved above
     (goto-char c-insert-here)))
@@ -257,4 +273,22 @@ Only C/C++ function types are properly supported currently."
 
 ;; set global binding for this key (follows the format for
 ;;   creating a changelog entry ...)
-(global-set-key "\C-x4h"  'gnome-doc-insert)
+(global-set-key "\C-x4h"  'gtk-doc-insert)
+
+
+;; Define another function for inserting a section header.
+(defun gtk-doc-insert-section ()
+  "Add a section documentation header at the current position."
+  (interactive)
+  (insert "/**\n"
+	  " * SECTION:\n"
+	  " * @Title: \n"
+	  " * @Short_Description: \n"
+	  " * @Stability_Level: \n"
+	  " * @See_Also: \n"
+	  " *\n"
+	  " * \n"
+	  " */\n"))
+
+;; Set the key binding.
+(global-set-key "\C-x4s" 'gtk-doc-insert-section)
