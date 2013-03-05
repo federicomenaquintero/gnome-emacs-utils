@@ -22,17 +22,42 @@ The main Emacs file is gnome-emacs-utils.el.  You can put this in your
 
 (load-library "/home/you/src/gnome-emacs-utils/gnome-emacs-utils.el")
 
-Be sure to use the correct pathname, of course :)  If you know of a more
-elegant way to load that elisp, please tweak this README file!
+You will then need to tweak that gnome-emacs-utils.el for the correct
+load path.  See the line where it does (add-to-list 'load-path ...)
+and modify it to fit your setup.
+
+
+Current features
+================
+
+* Devhelp.  You can press [f7] and Devhelp will appear showing
+  reference documentation for the word at the point.  For example, if
+  the point is on any part of the "gtk_widget_show" token and you
+  press [f7], Devhelp will appear with that function's documentation.
+
+  Alternatively, you can press [f6] to toggle the "Devhelp assistant".
+  This is a little window that shows you help for a *single* function
+  (e.g. gtk_widget_show()) instead of the whole widget's documentation
+  (GtkWidget).  When you move the Emacs point to another word, the
+  assistant window will automatically show help for that new word,
+  without you having to press anything else.  Press [f6] again to
+  disable the Devhelp assistant.
+
+
+* Mallard.  If you load a .page document (a Mallard XML file),
+  nxml-mode will be used with the Mallard schema automatically loaded.
+  This will give you completion for Mallard element names and
+  attributes, and proper XML validation.
+
+
+* Yasnippet.  There is a gnome-emacs-utils/snippets directory with
+  snippets that you can use with Yasnippet, to auto-expand strings
+  into fill-in forms (see http://emacswiki.org/emacs/Yasnippet for
+  more information).
 
 
 Wanted features
 ===============
-
-* Have a way of bringing up Yelp with documentation for the function
-  at the point.  This is easy for C functions with full names like
-  gtk_window_set_title, and harder for languages that let you
-  access methods as mywindow.set_title.
 
 * Add a hotkey so that inline API docs can be created easily when you
   are editing a public function.  For example, imagine you are in the
@@ -74,4 +99,7 @@ Authors
 =======
 
 Federico Mena Quintero <federico@gnome.org>
+Dirk-Jan C. Binnema <djcb@djcbsoftware.nl>
+Richard Hult <richard@imendio.com>
+
 Bitcoin donations kindly accepted at 1Ad3TS5u1Tq1SAUsuC8pz9VwHQeU6KStdA
