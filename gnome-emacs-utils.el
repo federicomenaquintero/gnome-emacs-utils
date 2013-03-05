@@ -17,6 +17,9 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+;; FIXME: this has an absolute pathname!  How do we fix it?
+(add-to-list 'load-path "/home/federico/src/gnome-emacs-utils")
+
 
 ;; Make Emacs know about Mallard documents
 ;;
@@ -57,3 +60,7 @@ gnome-emacs-utils in general are installed correctly."
 	(rng-what-schema) ;; This will print "Using mallard.rnc" on the minibuffer, to reassure the user
       (message "Mallard schema is not loaded; please fix gnome/mallard-locating-schema in gnome-emacs-utils.el and ensure the Mallard schema is installed")
       (sit-for 2))))
+
+
+;;; Devhelp
+(require 'devhelp)
