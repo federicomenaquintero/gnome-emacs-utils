@@ -1,10 +1,7 @@
 Gnome-emacs-utils
 =================
 
-This is a set of Emacs Lisp utilities to help Gnome developers.  It
-has the following features:
-
-* Teach Emacs about Mallard documents.
+This is a set of Emacs Lisp utilities to help Gnome developers.
 
 
 License
