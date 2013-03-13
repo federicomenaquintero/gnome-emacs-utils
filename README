@@ -56,35 +56,6 @@ Current features
 Wanted features
 ===============
 
-* Add a hotkey so that inline API docs can be created easily when you
-  are editing a public function.  For example, imagine you are in the
-  following code and the point is at [*]:
-
-     GtkSandwich *
-     gtk_foo_make_me_a_sandwich (GtkFoo *foo, GList *ingredients, GError **error)
-     {
-         [*]
-
-  Then you press that hotkey, and the following documentation template
-  is added:
-
-     /**
-      * gtk_foo_make_me_a_sandwich:
-      * foo: 
-      * ingredients:
-      * error:
-      *
-      * Put the description here.
-      *
-      * Return value: 
-      **/
-     GtkSandwich *
-     gtk_foo_make_me_a_sandwich (GtkFoo *foo, GList *ingredients, GError **error)
-     {
-
-  We used to have this in Gnome 1.x; see gnome-doc.el.  Try to revive
-  this code!
-
 * Now that we have gobject-introspection, use one of Emacs's
   typing completion libraries to implement "IntelliSense for Gnome
   functions":
@@ -100,3 +71,5 @@ Dirk-Jan C. Binnema <djcb@djcbsoftware.nl>
 Richard Hult <richard@imendio.com>
 
 Bitcoin donations kindly accepted at 1Ad3TS5u1Tq1SAUsuC8pz9VwHQeU6KStdA
+I (Federico) will redistribute donations to people who have contributed
+to gnome-emacs-utils.
