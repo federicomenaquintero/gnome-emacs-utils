@@ -1,0 +1,14 @@
+# NAME:gguard
+# --
+#ifndef ${1:__`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`_H__}
+#define $1
+
+#include <glib.h>
+
+G_BEGIN_DECLS
+
+$0
+
+G_END_DECLS
+
+#endif /* $1 */
