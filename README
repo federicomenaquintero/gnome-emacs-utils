@@ -52,6 +52,8 @@ Current features
   into fill-in forms (see http://emacswiki.org/emacs/Yasnippet for
   more information).
 
+* gtk-doc documentation annotation. You can press <Ctrl>x 4 h to
+  get a documentation header with gtk-doc format for the current function.
 
 Wanted features
 ===============
