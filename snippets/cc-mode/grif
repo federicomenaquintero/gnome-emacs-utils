@@ -1,0 +1,4 @@
+# NAME:grif (g_return_if_fail)
+# key: grif
+# --
+g_return_if_fail ($1);
