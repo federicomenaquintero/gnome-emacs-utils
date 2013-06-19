@@ -14,14 +14,15 @@ version 2 or later.  See the file COPYING for details.
 Installation
 ============
 
-The main Emacs file is gnome-emacs-utils.el.  You can put this in your
-.emacs to load this file:
+Move this directory, or make a symbolic link, to 
+~/.emacs.d/plugins/gnome-emacs/utils
 
-(load-library "/home/you/src/gnome-emacs-utils/gnome-emacs-utils.el")
+Then add the following to your .emacs file:
 
-You will then need to tweak that gnome-emacs-utils.el for the correct
-load path.  See the line where it does (add-to-list 'load-path ...)
-and modify it to fit your setup.
+  (add-to-list 'load-path
+	       "~/.emacs.d/plugins/gnome-emacs-utils")
+  (require 'gnome-emacs-utils)
+  (require 'gtk-doc)	;; if you want the GTK-Doc helper
 
 
 Current features
