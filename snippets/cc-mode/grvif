@@ -1,0 +1,4 @@
+# NAME:grvif (g_return_val_if_fail)
+# key: grvif
+# --
+g_return_val_if_fail ($1);
