@@ -14,15 +14,14 @@ version 2 or later.  See the file COPYING for details.
 Installation
 ============
 
-Move this directory, or make a symbolic link, to 
-~/.emacs.d/plugins/gnome-emacs/utils
+Move this directory, or make a symbolic link, to
+~/.emacs.d/plugins/gnome-emacs-utils
 
 Then add the following to your .emacs file:
 
   (add-to-list 'load-path
 	       "~/.emacs.d/plugins/gnome-emacs-utils")
   (require 'gnome-emacs-utils)
-  (require 'gtk-doc)	;; if you want the GTK-Doc helper
 
 
 Current features
@@ -53,8 +52,13 @@ Current features
   into fill-in forms (see http://emacswiki.org/emacs/Yasnippet for
   more information).
 
-* gtk-doc documentation annotation. You can press <Ctrl>x 4 h to
-  get a documentation header with gtk-doc format for the current function.
+* gtk-doc documentation annotation:
+
+      - You can press "C-x 4 h" to get a documentation header with
+        gtk-doc format for the current function.
+
+      - You can press "C-x 4 s" to add a documentation comment for a
+        SECTION in the gtk-doc documentation.
 
 Wanted features
 ===============

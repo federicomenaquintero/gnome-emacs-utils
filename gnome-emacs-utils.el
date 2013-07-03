@@ -60,4 +60,7 @@ gnome-emacs-utils in general are installed correctly."
 ;;; Devhelp
 (require 'devhelp)
 
+;;; Gtk-doc
+(require 'gtk-doc)
+
 (provide 'gnome-emacs-utils)
