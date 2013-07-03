@@ -292,3 +292,5 @@ Only C/C++ function types are properly supported currently."
 
 ;; Set the key binding.
 (global-set-key "\C-x4s" 'gtk-doc-insert-section)
+
+(provide 'gtk-doc)

@@ -17,10 +17,6 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-;; FIXME: this has an absolute pathname!  How do we fix it?
-(add-to-list 'load-path "/home/federico/src/gnome-emacs-utils")
-
-
 ;; Make Emacs know about Mallard documents
 ;;
 ;; To ensure that this works, load a .page file (a Mallard document)
@@ -33,8 +29,7 @@
 ;;    that nxml-mode did not find the mallard.rnc file on your system.  Check that the
 ;;    path for mallard.rnc is correct in gnome-emacs-utils/mallard-locating-schema.xml
 
-;; FIXME: this has an absolute pathname.  How should we locate this file?
-(defvar gnome/mallard-locating-schema "/home/federico/src/gnome-emacs-utils/mallard-locating-schema.xml")
+(defvar gnome/mallard-locating-schema "~/.emacs.d/plugins/gnome-emacs-utils/mallard-locating-schema.xml")
 
 (add-to-list 'auto-mode-alist '("\\.page\\'" . xml-mode))
 
@@ -64,3 +59,5 @@ gnome-emacs-utils in general are installed correctly."
 
 ;;; Devhelp
 (require 'devhelp)
+
+(provide 'gnome-emacs-utils)
